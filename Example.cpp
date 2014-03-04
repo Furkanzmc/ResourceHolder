@@ -25,7 +25,7 @@ int main()
     sf::Sprite sprite;
     // Create a window and display the sprite
     sf::RenderWindow app(sf::VideoMode(1368, 768), "PhysFS", sf::Style::Default);
-    app.setFramerateLimit(60);
+    app.setFramerateLimit(60);//Set the framerate to 60
     while(app.isOpen())
     {
         sf::Event event;
