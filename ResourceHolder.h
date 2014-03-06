@@ -32,6 +32,15 @@ public:
         close();
     }
 
+    void deInitializePhysfs() {
+        close();
+        PHYSFS_deinit();
+    }
+
+    void initializePhysfs() {
+        PHYSFS_init(NULL);
+    }
+
     //Adds a compressed file to Physfs's search path
     void addSearchPath(const char *compressedFilePath) {
         PHYSFS_addToSearchPath(compressedFilePath,  1);
@@ -103,10 +112,10 @@ template <typename Resource, typename Identifier>
 class ResourceHolder
 {
 public:
-    void load(Identifier id, const std::string& filename);
+    void load(Identifier id, const std::string& filename, bool isSmooth = false);
     template <typename Parameter>
     void load(Identifier id, const std::string& filename, const Parameter& secondParam);
-    void loadFromStream(Identifier id, PhysFsStream &stream);
+    void loadFromStream(Identifier id, PhysFsStream &stream, bool isSmooth = false);
     Resource& get(Identifier id);
     const Resource& get(Identifier id) const;
     bool remove(Identifier id);

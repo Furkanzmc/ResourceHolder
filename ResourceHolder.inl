@@ -1,11 +1,13 @@
 template <typename Resource, typename Identifier>
-void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename)
+void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename, bool isSmooth = false)
 {
     // Create and load resource
     std::unique_ptr<Resource> resource(new Resource());
     if (!resource->loadFromFile(filename))
         throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
 
+    if (isSmooth == true)
+        resource->setSmooth(true);
     // If loading successful, insert resource to map
     insertResource(id, std::move(resource));
 }
@@ -24,13 +26,15 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 }
 
 template <typename Resource, typename Identifier>
-void ResourceHolder<Resource, Identifier>::loadFromStream(Identifier id, PhysFsStream &stream)
+void ResourceHolder<Resource, Identifier>::loadFromStream(Identifier id, PhysFsStream &stream, bool isSmooth = false)
 {
     // Create and load resource
     std::unique_ptr<Resource> resource(new Resource());
     if (!resource->loadFromStream(stream))
         throw std::runtime_error("ResourceHolder::load - Failed to load from stream - " + stream.getOpenFileName());
 
+    if (isSmooth == true)
+        resource->setSmooth(true);
     // If loading successful, insert resource to map
     insertResource(id, std::move(resource));
 }
