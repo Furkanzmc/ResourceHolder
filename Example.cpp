@@ -1,5 +1,5 @@
 #include "SFML/Graphics.hpp"
-#include "ResourceHolder.h"
+#include "../GitHub/ResourceHolder/ResourceHolder.h"
 
 enum Textures {
     A,
@@ -11,9 +11,9 @@ enum Textures {
 int main()
 {
     // Create a stream and open a file that is inside "MyWonderfulArchive.7z".
-    PhysFsStream wonderfullStream("B.zip");//Or use PhysFsStream::addSearchPath(const char *compressedFilePath)
+    zmc::PhysFsStream wonderfullStream("B.zip");//Or use PhysFsStream::addSearchPath(const char *compressedFilePath)
     wonderfullStream.open("A.jpg");//Open a file inside of the zip file
-    ResourceHolder<sf::Texture, Textures> rc;
+    zmc::ResourceHolder<sf::Texture, Textures> rc;
     //You can use only ResourceHolder::load function if you don't want to load assets from stream
     rc.loadFromStream(Textures::A, wonderfullStream);
     wonderfullStream.open("B.jpg");
