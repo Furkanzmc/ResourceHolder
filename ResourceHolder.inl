@@ -1,5 +1,7 @@
+namespace zmc
+{
 template <typename Resource, typename Identifier>
-void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename, bool isSmooth = false)
+void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename, bool isSmooth)
 {
     // Create and load resource
     std::unique_ptr<Resource> resource(new Resource());
@@ -26,7 +28,7 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 }
 
 template <typename Resource, typename Identifier>
-void ResourceHolder<Resource, Identifier>::loadFromStream(Identifier id, PhysFsStream &stream, bool isSmooth = false)
+void ResourceHolder<Resource, Identifier>::loadFromStream(Identifier id, PhysFsStream &stream, bool isSmooth)
 {
     // Create and load resource
     std::unique_ptr<Resource> resource(new Resource());
@@ -72,5 +74,6 @@ void ResourceHolder<Resource, Identifier>::insertResource(Identifier id, std::un
 {
     // Insert and check success
     auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
-//    assert(inserted.second);
+    assert(inserted.second);
+}
 }

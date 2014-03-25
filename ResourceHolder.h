@@ -16,6 +16,8 @@
  * Dependencies: physfs.lib (physfs-d.lib for Debug build), zlib.lib and advapi32.lib Also don't forget to copy the *.dll files to the
  * *.exe file path (physfs.dll (physfs-d.dll for Debug build), zlib1.dll)
  */
+namespace zmc
+{
 class PhysFsStream : public sf::InputStream
 {
 public:
@@ -27,48 +29,57 @@ public:
             addSearchPath(compressedFilePath);
     }
 
-    virtual ~PhysFsStream() {
+    virtual ~PhysFsStream()
+    {
         PHYSFS_deinit();
         close();
     }
 
-    void deInitializePhysfs() {
+    void deInitializePhysfs()
+    {
         close();
         PHYSFS_deinit();
     }
 
-    void initializePhysfs() {
+    void initializePhysfs()
+    {
         PHYSFS_init(NULL);
     }
 
     //Adds a compressed file to Physfs's search path
-    void addSearchPath(const char *compressedFilePath) {
+    void addSearchPath(const char *compressedFilePath)
+    {
         PHYSFS_addToSearchPath(compressedFilePath,  1);
     }
 
     //Returns the currently opened file name
-    std::string getOpenFileName() {
+    std::string getOpenFileName()
+    {
         return mLastopenFileName;
     }
 
-    bool isOpen() const {
+    bool isOpen() const
+    {
         return (mFile != 0x0);
     }
 
-    bool open(const char* filename) {
+    bool open(const char* filename)
+    {
         close();
         mFile = PHYSFS_openRead(filename);
         mLastopenFileName = filename;
         return isOpen();
     }
 
-    void close() {
+    void close()
+    {
         if (isOpen())
             PHYSFS_close(mFile);
-        mFile=0x0;
+        mFile = 0x0;
     }
 
-    virtual sf::Int64 read(void* data, sf::Int64 size) {
+    virtual sf::Int64 read(void* data, sf::Int64 size)
+    {
         if (!isOpen())
             return -1;
 
@@ -78,7 +89,8 @@ public:
         return PHYSFS_read(mFile, data, 1, static_cast<PHYSFS_uint32>(size));
     }
 
-    virtual sf::Int64 seek(sf::Int64 position) {
+    virtual sf::Int64 seek(sf::Int64 position)
+    {
         if (!isOpen())
             return -1;
 
@@ -89,14 +101,16 @@ public:
             return -1;
     }
 
-    virtual sf::Int64 tell() {
+    virtual sf::Int64 tell()
+    {
         if (!isOpen())
             return -1;
         // PHYSFS_tell returns the offset in bytes or -1 on error just like SFML wants.
         return PHYSFS_tell(mFile);
     }
 
-    virtual sf::Int64 getSize() {
+    virtual sf::Int64 getSize()
+    {
         if (!isOpen())
             return -1;
         // PHYSFS_fileLength also the returns length of file or -1 on error just like SFML wants.
@@ -124,8 +138,8 @@ private:
     void insertResource(Identifier id, std::unique_ptr<Resource> resource);
 
 private:
-    std::map<Identifier, std::unique_ptr<Resource>>	mResourceMap;
+    std::map<Identifier, std::unique_ptr<Resource>> mResourceMap;
 };
-
+}
 #include "ResourceHolder.inl"
 #endif // RESOURCEHOLDER_HPP
