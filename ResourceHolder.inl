@@ -8,8 +8,18 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
     if (!resource->loadFromFile(filename))
         throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
 
-    if (isSmooth == true)
-        resource->setSmooth(true);
+    resource->setSmooth(isSmooth);
+    // If loading successful, insert resource to map
+    insertResource(id, std::move(resource));
+}
+
+template <typename Resource, typename Identifier>
+void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename)
+{
+    // Create and load resource
+    std::unique_ptr<Resource> resource(new Resource());
+    if (!resource->loadFromFile(filename))
+        throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
     // If loading successful, insert resource to map
     insertResource(id, std::move(resource));
 }

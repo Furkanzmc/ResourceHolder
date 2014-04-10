@@ -126,7 +126,15 @@ template <typename Resource, typename Identifier>
 class ResourceHolder
 {
 public:
-    void load(Identifier id, const std::string& filename, bool isSmooth = false);
+    /**
+     * @brief Use this if you want to load textures with smooth parameter true, any other resource would create a problem with this
+     * function
+     * @param id
+     * @param filename
+     * @param isSmooth
+     */
+    void load(Identifier id, const std::string& filename, bool isSmooth);
+    void load(Identifier id, const std::string& filename);
     template <typename Parameter>
     void load(Identifier id, const std::string& filename, const Parameter& secondParam);
     void loadFromStream(Identifier id, PhysFsStream &stream, bool isSmooth = false);
