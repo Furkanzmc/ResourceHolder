@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <cassert>
 #include "physfs.h"
-#include "SFML/System/InputStream.hpp"
+#include <SFML/System/InputStream.hpp>
 
 /**
  * @brief A custom sf::InputStream to handle input from Physfs. You don't need to call PHYSFS_init separetely
