@@ -6,7 +6,7 @@
 #include <memory>
 #include <stdexcept>
 #include <cassert>
-#include "physfs.h"
+#include "physfs/physfs.h"
 #include <SFML/System/InputStream.hpp>
 
 /**
